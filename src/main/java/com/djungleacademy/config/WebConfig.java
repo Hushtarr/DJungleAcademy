@@ -8,6 +8,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     public void addViewControllers(ViewControllerRegistry view){
+        // static pages
         view.addViewController("/courses").setViewName("courses");
+        view.addViewController("/about").setViewName("about");
     }
 }
