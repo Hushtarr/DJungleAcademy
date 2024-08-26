@@ -1,0 +1,28 @@
+# Build output
+/target/
+*.jar
+*.war
+*.ear
+
+# IDE specific
+/.idea/
+/*.iml
+/*.iws
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Dependency directories
+/.mvn/
+/node_modules/
+
+# Editor-based HTTP Client requests
+/httpRequests/
+
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
