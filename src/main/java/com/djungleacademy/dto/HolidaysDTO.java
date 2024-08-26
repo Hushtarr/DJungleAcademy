@@ -11,13 +11,9 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HolidaysDTO {
-    private MonthDay day;
+    private String day;
     private String description;
     private HolidayType holidayType;
 
-    public String getFormattedDay() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd");
-        return this.day.format(formatter);
-    }
 
 }
