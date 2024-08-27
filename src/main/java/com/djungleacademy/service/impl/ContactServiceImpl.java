@@ -2,14 +2,17 @@ package com.djungleacademy.service.impl;
 
 import com.djungleacademy.dto.ContactFormDTO;
 import com.djungleacademy.service.ContactService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
+@Slf4j
 @Service
 public class ContactServiceImpl implements ContactService {
 
+
     @Override
     public void save(ContactFormDTO contactFormDTO) {
-        contactFormDTO.setIsSaved(true);
+        System.out.println(log.hashCode());
+        System.out.println("info saved");
     }
 
     @Override
