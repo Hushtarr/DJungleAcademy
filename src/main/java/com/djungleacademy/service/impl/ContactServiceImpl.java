@@ -11,7 +11,6 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void save(ContactFormDTO contactFormDTO) {
-        System.out.println(log.hashCode());
         System.out.println("info saved");
     }
 
