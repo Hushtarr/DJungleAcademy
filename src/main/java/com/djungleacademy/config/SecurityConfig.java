@@ -15,29 +15,29 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf((csrf) -> csrf.disable())
-                        .authorizeHttpRequests(requests ->
-                        requests.requestMatchers("/", "/home").permitAll()
-                                .requestMatchers("/dashboard").authenticated()
-                                .requestMatchers("/holidays/**").permitAll()
-                                .requestMatchers("/contact").permitAll()
-                                .requestMatchers("/saveMsg").permitAll()
-                                .requestMatchers("/courses").authenticated()
-                                .requestMatchers("/about").permitAll()
-                                .requestMatchers("/assets/**").permitAll()
-                                .requestMatchers("/login").permitAll()
-                )
-                .formLogin(loginConfigurer ->
-                        loginConfigurer.loginPage("/login")
-                                .defaultSuccessUrl("/dashboard")
-                                .failureUrl("/login?error=true")
-                                .permitAll()
-                )
-                .logout(logoutConfigurer ->
-                        logoutConfigurer.logoutSuccessUrl("/login?logout=true")
-                                .invalidateHttpSession(true)
-                                .permitAll()
-                )
+        http.csrf((csrf) -> csrf
+                        .ignoringRequestMatchers("/saveMsg"))
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/dashboard").authenticated()
+                        .requestMatchers("/", "/home").permitAll()
+                        .requestMatchers("/holidays/**").permitAll()
+                        .requestMatchers("/contact").permitAll()
+                        .requestMatchers("/saveMsg").permitAll()
+                        .requestMatchers("/courses").permitAll()
+                        .requestMatchers("/about").permitAll()
+                        .requestMatchers("/assets/**").permitAll()
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/logout").permitAll())
+
+                .formLogin(loginConfigurer -> loginConfigurer
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/dashboard")
+                        .failureUrl("/login?error=true").permitAll())
+
+                .logout(logoutConfigurer -> logoutConfigurer
+                        .logoutSuccessUrl("/login?logout=true")
+                        .invalidateHttpSession(true).permitAll())
+
                 .httpBasic(Customizer.withDefaults());
         return http.build();
 
