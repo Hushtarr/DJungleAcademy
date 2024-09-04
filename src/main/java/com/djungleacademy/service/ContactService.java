@@ -1,13 +1,15 @@
 package com.djungleacademy.service;
 
-import com.djungleacademy.dto.ContactFormDTO;
+import com.djungleacademy.dto.ContactDTO;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 
-@SessionScope
+import java.util.List;
+
 public interface ContactService {
-    void save(ContactFormDTO contactFormDTO);
-    void update(ContactFormDTO contactFormDTO);
-    void delete(ContactFormDTO contactFormDTO);
-    ContactFormDTO getById(Long id);
+    void save(ContactDTO contactDTO);
+    void update(ContactDTO contactDTO);
+    void delete(ContactDTO contactDTO);
+    ContactDTO getById(Long id);
+    List<ContactDTO> getAll();
 }

@@ -6,6 +6,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -13,12 +14,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-
-        http.csrf((csrf) -> csrf
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/saveMsg"))
-                .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/dashboard").authenticated()
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/home").permitAll()
                         .requestMatchers("/holidays/**").permitAll()
                         .requestMatchers("/contact").permitAll()
@@ -26,37 +26,36 @@ public class SecurityConfig {
                         .requestMatchers("/courses").permitAll()
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/assets/**").permitAll()
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/logout").permitAll())
-
-                .formLogin(loginConfigurer -> loginConfigurer
+                        .requestMatchers("/login", "/logout").permitAll() // 允许访问登录和登出页面
+                        .anyRequest().authenticated() // 所有其他请求都需要认证
+                )
+                .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/dashboard")
-                        .failureUrl("/login?error=true").permitAll())
-
-                .logout(logoutConfigurer -> logoutConfigurer
+                        .defaultSuccessUrl("/dashboard", true) // 重定向到 dashboard 页面并保持状态
+                        .failureUrl("/login?error=true")
+                )
+                .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout=true")
-                        .invalidateHttpSession(true).permitAll())
-
-                .httpBasic(Customizer.withDefaults());
-        return http.build();
-
+                        .invalidateHttpSession(true)
+                )
+                .httpBasic(Customizer.withDefaults())
+                .build();
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-
+    public UserDetailsService userDetailsService() {
         UserDetails user = User.withDefaultPasswordEncoder()
                 .username("user")
                 .password("123")
                 .roles("USER")
                 .build();
+
         UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("admin")
                 .password("123")
-                .roles("USER", "ADMIN")
+                .roles("ADMIN")
                 .build();
+
         return new InMemoryUserDetailsManager(user, admin);
     }
-
 }

@@ -1,11 +1,9 @@
 package com.djungleacademy.dto;
 
+import com.djungleacademy.enums.HolidayType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.MonthDay;
-import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
