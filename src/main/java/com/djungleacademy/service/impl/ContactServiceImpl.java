@@ -2,6 +2,7 @@ package com.djungleacademy.service.impl;
 
 import com.djungleacademy.dto.ContactDTO;
 import com.djungleacademy.entity.Contact;
+import com.djungleacademy.enums.MessageType;
 import com.djungleacademy.mapper.GlobalMapper;
 import com.djungleacademy.repository.ContactRepository;
 import com.djungleacademy.service.ContactService;
@@ -29,7 +30,11 @@ public class ContactServiceImpl implements ContactService {
     public void save(ContactDTO contactDTO) {
         Contact contact =mapper.convert(contactDTO, Contact.class);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        contactRepository.save(mapper.convert(contactDTO, Contact.class));
+        String name = (authentication == null) ? "anonymous user" : authentication.getName();
+        contact.setCreatedAt(LocalDateTime.now());
+        contact.setCreatedBy(name);
+        contact.setMessageType(MessageType.UNREAD);
+        contactRepository.save(contact);
         System.out.println("info saved");
     }
 

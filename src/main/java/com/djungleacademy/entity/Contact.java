@@ -21,6 +21,8 @@ public class Contact extends BaseEntity {
 
     private String message;
 
+    private Boolean isDeleted = false;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "contact_type")
     private MessageType messageType;

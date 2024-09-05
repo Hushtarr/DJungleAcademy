@@ -13,6 +13,7 @@ CREATE TABLE Contact (
                          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                          created_by VARCHAR(255),
-                         updated_by VARCHAR(255)
+                         updated_by VARCHAR(255),
+                         isDeleted BOOLEAN DEFAULT FALSE
 );
 
