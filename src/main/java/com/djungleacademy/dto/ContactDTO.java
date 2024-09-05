@@ -11,6 +11,8 @@ import lombok.*;
 @Getter
 @Setter
 public class ContactDTO {
+    private Long id;
+
     @NotBlank(message="Name must not be blank")
     @Size(min=3, message="Name must be at least 3 characters long")
     private String name;

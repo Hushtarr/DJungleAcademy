@@ -2,7 +2,6 @@ package com.djungleacademy.service.impl;
 
 import com.djungleacademy.dto.ContactDTO;
 import com.djungleacademy.entity.Contact;
-import com.djungleacademy.enums.ContactType;
 import com.djungleacademy.mapper.GlobalMapper;
 import com.djungleacademy.repository.ContactRepository;
 import com.djungleacademy.service.ContactService;
@@ -30,12 +29,6 @@ public class ContactServiceImpl implements ContactService {
     public void save(ContactDTO contactDTO) {
         Contact contact =mapper.convert(contactDTO, Contact.class);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.isAuthenticated()){
-            contact.setContactType(ContactType.USER);
-        }
-        else {
-            contact.setContactType(ContactType.ANONYMOUS);
-        }
         contactRepository.save(mapper.convert(contactDTO, Contact.class));
         System.out.println("info saved");
     }

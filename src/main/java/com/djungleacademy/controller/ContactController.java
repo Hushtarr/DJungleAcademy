@@ -5,16 +5,14 @@ import com.djungleacademy.dto.ContactDTO;
 import com.djungleacademy.service.ContactService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Slf4j
 @Controller
 public class ContactController {
@@ -37,6 +35,7 @@ public class ContactController {
             return "contact";
         }
         contactService.save(contactDTO);
+        contactDTO.toString();
         return "redirect:/contact";
     }
 
@@ -44,11 +43,11 @@ public class ContactController {
     public String displayMessages(Model model) {
         List<ContactDTO> msg = contactService.getAll();
         model.addAttribute("contactMsgs", msg);
-        return "messages";
+        return "message";
     }
 
-//
-//    @RequestMapping(value = "/closeMsg",method = GET)
+
+//    @GetMapping("/closeMsg")
 //    public String closeMsg(@RequestParam int id, Authentication authentication) {
 //        contactService.updateMsgStatus(id,authentication.getName());
 //        return "redirect:/displayMessages";

@@ -1,13 +1,13 @@
 package com.djungleacademy.entity;
 
 import com.djungleacademy.entity.BaseEntity;
-import com.djungleacademy.enums.ContactType;
+import com.djungleacademy.enums.MessageType;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "contact")
+@Table(name = "Contact")
 public class Contact extends BaseEntity {
 
 
@@ -21,10 +21,7 @@ public class Contact extends BaseEntity {
 
     private String message;
 
-    @Column(name = "is_saved")
-    private Boolean isSaved = true;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "contact_type")
-    private ContactType contactType;
+    private MessageType messageType;
 }

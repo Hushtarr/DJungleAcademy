@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ContactType {
-    USER("User"),ANONYMOUS("Anonymous");
+public enum MessageType {
+    READ("Read"),UNREAD("Unread");
     private final String value;
 
 }
