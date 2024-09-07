@@ -38,30 +38,30 @@ public class ContactServiceImpl implements ContactService {
         System.out.println("info saved");
     }
 
-    @Override
-    public void update(ContactDTO contactDTO) {
-        Contact contact=contactRepository.findByEmail(contactDTO.getEmail());
-        contact.setSubject(contactDTO.getSubject());
-        contact.setMessage(contactDTO.getMessage());
-        contact.setUpdatedAt(LocalDateTime.now());
-        contactRepository.save(contact);
-    }
-
-
-    @Override
-    public void delete(ContactDTO contactDTO) {
-
-    }
 
     @Override
     public ContactDTO getById(Long id) {
-        return null;
+        Contact contact= contactRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("not found"));
+        return mapper.convert(contact, ContactDTO.class);
     }
 
     @Override
     public List<ContactDTO> getAll() {
-        return contactRepository.findAll().stream()
-                .map(dto->mapper.convert(dto,ContactDTO.class))
+        return contactRepository.findAllByIsDeleted(false)
+                .stream()
+                .map(entity->mapper
+                        .convert(entity, ContactDTO.class))
                 .collect(Collectors.toList());
+
+
+    }
+
+    @Override
+    public void updateMsgStatus(Long id) {
+        Contact contact = contactRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Contact not found"));
+        contact.setIsDeleted(true);
+        contactRepository.save(contact);
     }
 }

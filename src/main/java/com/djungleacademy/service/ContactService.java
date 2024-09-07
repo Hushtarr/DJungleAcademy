@@ -8,8 +8,7 @@ import java.util.List;
 
 public interface ContactService {
     void save(ContactDTO contactDTO);
-    void update(ContactDTO contactDTO);
-    void delete(ContactDTO contactDTO);
     ContactDTO getById(Long id);
     List<ContactDTO> getAll();
+    void updateMsgStatus(Long id);
 }

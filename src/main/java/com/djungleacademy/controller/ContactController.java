@@ -47,11 +47,11 @@ public class ContactController {
     }
 
 
-//    @GetMapping("/closeMsg")
-//    public String closeMsg(@RequestParam int id, Authentication authentication) {
-//        contactService.updateMsgStatus(id,authentication.getName());
-//        return "redirect:/displayMessages";
-//    }
+    @PostMapping("/closeMsg/{id}")
+    public String closeMsg(@PathVariable Long id) {
+        contactService.updateMsgStatus(id);
+        return "redirect:/displayMessages";
+    }
 
 
 
