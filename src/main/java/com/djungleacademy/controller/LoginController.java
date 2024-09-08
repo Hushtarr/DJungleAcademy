@@ -8,24 +8,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class LoginController {
 
-    @GetMapping("/login")
-    public String showLoginPage(Model model) {
-        return "login";
-    }
-
-    @PostMapping("/login")
-    public String processLogin(String username, String password, Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            model.addAttribute("error", "Invalid username or password");
+    @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
+    public String displayLoginPage(@RequestParam(value = "error", required = false) String error,
+                                   @RequestParam(value = "logout", required = false) String logout, Model model) {        String msg = null;
+        if (error != null) {
+            msg = "Username or Password is incorrect !!";
         }
-        return "login";
+        if (logout != null) {
+            msg = "You have been successfully logged out !!";
+        }
+        model.addAttribute("errorMessage", msg);
+        return "/login";
+
     }
 
     @GetMapping("/logout")
@@ -34,3 +33,4 @@ public class LoginController {
         return "redirect:/login?logout=true";
     }
 }
+

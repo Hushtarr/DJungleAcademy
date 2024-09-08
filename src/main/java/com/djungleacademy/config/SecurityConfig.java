@@ -26,8 +26,9 @@ public class SecurityConfig {
                         .requestMatchers("/courses").permitAll()
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/assets/**").permitAll()
+                        .requestMatchers("/displayMessages").hasRole("ADMIN")
                         .requestMatchers("/login", "/logout").permitAll() // 允许访问登录和登出页面
-                        .anyRequest().authenticated() // 所有其他请求都需要认证
+//                        .anyRequest().authenticated() // 所有其他请求都需要认证
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
