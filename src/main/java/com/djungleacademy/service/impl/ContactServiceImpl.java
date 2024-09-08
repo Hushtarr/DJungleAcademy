@@ -29,10 +29,6 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public void save(ContactDTO contactDTO) {
         Contact contact =mapper.convert(contactDTO, Contact.class);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String name = (authentication == null) ? "anonymous user" : authentication.getName();
-        contact.setCreatedAt(LocalDateTime.now());
-        contact.setCreatedBy(name);
         contact.setMessageType(MessageType.UNREAD);
         contactRepository.save(contact);
         System.out.println("info saved");

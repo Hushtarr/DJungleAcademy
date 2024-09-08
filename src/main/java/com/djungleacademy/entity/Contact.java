@@ -11,16 +11,22 @@ import lombok.Data;
 public class Contact extends BaseEntity {
 
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String mobileNum;
 
+    @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String subject;
 
+    @Column(nullable = false)
     private String message;
 
+    @Column(nullable = false)
     private Boolean isDeleted = false;
 
     @Enumerated(EnumType.STRING)

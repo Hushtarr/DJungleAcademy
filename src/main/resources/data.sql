@@ -1,19 +1,10 @@
--- Drop the table if it exists
-DROP TABLE IF EXISTS Contact;
-
--- Create the table
-CREATE TABLE Contact (
-                         id BIGSERIAL PRIMARY KEY,
-                         name VARCHAR(255),
-                         mobileNum VARCHAR(20),
-                         email VARCHAR(255),
-                         subject VARCHAR(255),
-                         message TEXT,
-                         message_type VARCHAR(50),
-                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                         created_by VARCHAR(255),
-                         updated_by VARCHAR(255),
-                         isDeleted BOOLEAN DEFAULT FALSE
-);
-
+INSERT INTO holidays (day, description, holiday_type)
+VALUES
+    ('Jan 1', 'New Year''s Day', 'FESTIVAL'),
+    ('Oct 31', 'Halloween', 'FESTIVAL'),
+    ('Nov 24', 'Thanksgiving Day', 'FESTIVAL'),
+    ('Dec 25', 'Christmas', 'FESTIVAL'),
+    ('Jan 17', 'Martin Luther King Jr. Day', 'FEDERAL'),
+    ('Jul 4', 'Independence Day', 'FEDERAL'),
+    ('Sep 5', 'Labor Day', 'FEDERAL'),
+    ('Nov 11', 'Veterans Day', 'FEDERAL');
