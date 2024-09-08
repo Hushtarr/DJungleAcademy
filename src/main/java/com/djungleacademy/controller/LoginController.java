@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class LoginController {
 
-    @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
+    @GetMapping("/login")
     public String displayLoginPage(@RequestParam(value = "error", required = false) String error,
-                                   @RequestParam(value = "logout", required = false) String logout, Model model) {        String msg = null;
+                                   @RequestParam(value = "logout", required = false) String logout,
+                                   Model model) {
+        String msg = null;
         if (error != null) {
             msg = "Username or Password is incorrect !!";
         }
@@ -23,9 +25,16 @@ public class LoginController {
             msg = "You have been successfully logged out !!";
         }
         model.addAttribute("errorMessage", msg);
-        return "/login";
-
+        return "login"; // 返回登录页面视图
     }
+
+    @PostMapping("/login")
+    public String processLogin() {
+        // 如果你有自定义的登录处理逻辑，放在这里
+        // 否则不需要，因为 Spring Security 会自动处理登录认证
+        return "redirect:/dashboard"; // 登录成功后重定向到 dashboard
+    }
+
 
     @GetMapping("/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {

@@ -15,7 +15,7 @@ public class DashboardController {
         model.addAttribute("username", authentication.getName());
         model.addAttribute("roles", authentication.getAuthorities().toString());
 //        throw new RuntimeException("there has some technical error");
-        return "dashboard.html";
+        return "dashboard";
     }
 
 }
