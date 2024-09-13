@@ -34,7 +34,7 @@ public class BaseEntity {
 
     private String getLoginUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (authentication == null) ? "anonymous user" : authentication.getName();
+        return (authentication == null) ? "anonymousUser" : authentication.getName();
     }
 
 
