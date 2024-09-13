@@ -3,12 +3,15 @@ package com.djungleacademy.entity;
 import com.djungleacademy.enums.HolidayType;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-    @Data
     @Entity
+    @Getter
+    @Setter
     @NoArgsConstructor
     @Table(name = "holidays")
     public class Holiday {

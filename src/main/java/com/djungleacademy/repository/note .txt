@@ -1,0 +1,18 @@
+Sorting repository :
+
+public interface UserRepository extends JpaRepository<User, Long>, SortingRepository<User, Long> {
+    List<User> findAll(Sort sort);
+}
+
+
+@GetMapping("/users")
+public ResponseEntity<List<User>> getUsers(@RequestParam(defaultValue = "") String sortBy,
+                                            @RequestParam(defaultValue = "ASC") Sort.Direction direction) {
+    Sort sort = Sort.by(direction, sortBy);
+    List<User> users = userRepository.findAll(sort);
+    return new ResponseEntity<>(users, HttpStatus.OK);
+}
+
+
+
+

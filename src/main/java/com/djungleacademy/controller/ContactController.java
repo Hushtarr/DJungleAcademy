@@ -5,7 +5,6 @@ import com.djungleacademy.dto.ContactDTO;
 import com.djungleacademy.service.ContactService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,7 +34,6 @@ public class ContactController {
             return "contact";
         }
         contactService.save(contactDTO);
-        contactDTO.toString();
         return "redirect:/contact";
     }
 

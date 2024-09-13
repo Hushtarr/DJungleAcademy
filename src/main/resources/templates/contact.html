@@ -51,6 +51,7 @@ Author URL: http://w3layouts.com
                     <form action="/saveMsg" method="post" class="signin-form" th:object="${contact}">
                         <div class="input-grids">
                             <div class="row">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                 <div class="col-sm-6">
                                     <input type="text" th:field="*{name}" placeholder="Your Name"
                                            class="contact-input" />

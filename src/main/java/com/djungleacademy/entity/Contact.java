@@ -4,9 +4,14 @@ import com.djungleacademy.entity.BaseEntity;
 import com.djungleacademy.enums.MessageType;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "Contact")
 public class Contact extends BaseEntity {
 
