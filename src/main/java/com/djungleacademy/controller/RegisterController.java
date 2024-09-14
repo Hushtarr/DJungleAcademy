@@ -29,10 +29,10 @@ public class RegisterController {
     @PostMapping("/createUser")
     public String creatUser(@Valid @ModelAttribute("user") UserDTO userDTO, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            log.error("Contact form validation failed due to : {}", bindingResult.getAllErrors());
-            return "contact";
+            log.error("Register failed due to : {}", bindingResult.getAllErrors());
+            return "register";
         }
         userService.save(userDTO);
-        return "redirect:/login";
+        return "redirect:/login?register=true";
     }
 }

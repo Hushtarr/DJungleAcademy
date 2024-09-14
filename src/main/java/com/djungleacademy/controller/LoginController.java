@@ -16,6 +16,7 @@ public class LoginController {
     @GetMapping("/login")
     public String displayLoginPage(@RequestParam(value = "error", required = false) String error,
                                    @RequestParam(value = "logout", required = false) String logout,
+                                   @RequestParam(value = "register", required = false) String register,
                                    Model model) {
         String msg = null;
         if (error != null) {
@@ -23,6 +24,9 @@ public class LoginController {
         }
         if (logout != null) {
             msg = "You have been successfully logged out !!";
+        }
+        if (register.equals("true")) {
+            msg = "You have successfully registered !!";
         }
         model.addAttribute("errorMessage", msg);
         return "login"; // 返回登录页面视图

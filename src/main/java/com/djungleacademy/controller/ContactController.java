@@ -32,7 +32,7 @@ public class ContactController {
     @PostMapping( "/saveMsg")
     public String saveMessage(@Valid @ModelAttribute("contact") ContactDTO contactDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
-            log.error("Contact form validation failed due to : " + bindingResult.getAllErrors());
+            log.error("Contact form validation failed due to : {}", bindingResult.getAllErrors());
             return "contact";
         }
         contactService.save(contactDTO);
