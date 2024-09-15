@@ -30,7 +30,7 @@ public class UserDTO {
     @NotBlank(message="user name must not be blank")
     private String userName;
 
-    @Password
+//    @Password
     @NotBlank(message="Password must not be blank")
     private String password;
 
@@ -39,7 +39,7 @@ public class UserDTO {
     private String confirmPassword;
 
     @NotBlank(message="Mobile number must not be blank")
-    @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
+    @Pattern(regexp = "^\\+1 \\(\\d{3}\\) \\d{3}-\\d{4}$", message = "Phone Number is required field and may be in any valid phone number format.")
     private String phone;
 
     @NotBlank(message="Email must not be blank")

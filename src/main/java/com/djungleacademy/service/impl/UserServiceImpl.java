@@ -2,6 +2,7 @@ package com.djungleacademy.service.impl;
 
 import com.djungleacademy.dto.UserDTO;
 import com.djungleacademy.entity.User;
+import com.djungleacademy.enums.UserType;
 import com.djungleacademy.mapper.GlobalMapper;
 import com.djungleacademy.repository.UserRepository;
 import com.djungleacademy.service.UserService;
@@ -16,6 +17,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(UserDTO userDTO) {
-        userRepository.save(globalMapper.convert(userDTO, User.class));
+        User user=globalMapper.convert(userDTO, User.class);
+//        user.setUserType(UserType.STUDENT);
+        userRepository.save(user);
     }
 }
