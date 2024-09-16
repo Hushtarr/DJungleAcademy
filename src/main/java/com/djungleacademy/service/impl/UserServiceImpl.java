@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(UserDTO userDTO) {
         User user=globalMapper.convert(userDTO, User.class);
-//        user.setUserType(UserType.STUDENT);
+        user.setUserType(UserType.STUDENT);
         userRepository.save(user);
     }
 }
