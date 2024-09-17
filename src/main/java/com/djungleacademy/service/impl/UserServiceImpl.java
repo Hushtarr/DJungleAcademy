@@ -7,6 +7,7 @@ import com.djungleacademy.mapper.GlobalMapper;
 import com.djungleacademy.repository.UserRepository;
 import com.djungleacademy.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,10 +15,12 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final GlobalMapper globalMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void save(UserDTO userDTO) {
         User user=globalMapper.convert(userDTO, User.class);
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setUserType(UserType.STUDENT);
         userRepository.save(user);
     }

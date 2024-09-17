@@ -12,6 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.List;
 @Data
 public class CustomAuthenticationProvider implements AuthenticationProvider {
     private final UserRepository  userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
 /*     process of authentication
@@ -31,11 +33,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
         User user =userRepository.findByEmail(email);
 
-        // If user is found and password matches, create an Authentication token with user's email, password, and roles
-        if(user!= null && user.getPassword().equals(password)) {
+        // If a user is found and password matches, create an Authentication token with user's email, password, and roles
+        if(user!= null && passwordEncoder.matches(password,user.getPassword())) {
             return new UsernamePasswordAuthenticationToken(
                     user.getUserName(),//chose a field to be principle(username)
-                    password,
+                    null,//no need to mention password cause the passwordEncoder has done the job
                     getGrantedAuthorities(user.getUserType())
             );
         }
