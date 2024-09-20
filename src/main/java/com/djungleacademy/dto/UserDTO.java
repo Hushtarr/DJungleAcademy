@@ -1,7 +1,6 @@
 package com.djungleacademy.dto;
 
 import com.djungleacademy.validation.FieldMatch;
-import com.djungleacademy.validation.Password;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -50,4 +49,6 @@ public class UserDTO {
     @Email(message = "provide email pls")
     @Transient // telling the jpa this is the field no need to interact
     private String confirmEmail;
+
+    private AddressDTO address;
 }

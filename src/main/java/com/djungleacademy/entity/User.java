@@ -52,6 +52,6 @@ public class User extends BaseEntity {
     If not, the default ID will be used because that is unique.*/
 
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "address")
+    @JoinColumn(name = "address_id")
     private Address address;
 }
