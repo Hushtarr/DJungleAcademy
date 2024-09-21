@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -36,20 +37,20 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         // If a user is found and password matches, create an Authentication token with user's email, password, and roles
         if(user!= null && passwordEncoder.matches(password,user.getPassword())) {
             return new UsernamePasswordAuthenticationToken(
-                    user.getUserName(),//chose a field to be principle(username)
+                    user.getEmail(),//chose a field to be principle(username)
                     null,//no need to mention password cause the passwordEncoder has done the job
                     getGrantedAuthorities(user.getUserType())
             );
         }
         else {
-            throw new BadCredentialsException("Bad credentials");
+            throw new UsernameNotFoundException("Bad credentials");
         }
 
     }
 
     private List<GrantedAuthority> getGrantedAuthorities(UserType roles) {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("Role_" + roles.getValue()));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + roles.getValue()));
         // simpleGrantedAuthority is for create Role obj -> public SimpleGrantedAuthority(String role) {
         return grantedAuthorities;
     }

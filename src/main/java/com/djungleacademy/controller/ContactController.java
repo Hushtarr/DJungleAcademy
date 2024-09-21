@@ -41,8 +41,8 @@ public class ContactController {
 
     @GetMapping("/displayMessages")
     public String displayMessages(Model model) {
-        List<ContactDTO> msg = contactService.getAll();
-        model.addAttribute("contactMsgs", msg);
+        model.addAttribute("contactMsgs", contactService.getAll());
+        System.out.println(contactService.getAll().size());
         return "message";
     }
 

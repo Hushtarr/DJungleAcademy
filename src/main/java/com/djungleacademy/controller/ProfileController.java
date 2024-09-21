@@ -23,7 +23,7 @@ public class ProfileController {
     @GetMapping("/updateProfile")
     public String showProfilePage(Model model, Authentication authentication) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO userDTO = userService.findByUserName(auth.getName());
+        UserDTO userDTO = userService.findByEmail(auth.getName());
         model.addAttribute("user", userDTO);
         return "profile";
     }

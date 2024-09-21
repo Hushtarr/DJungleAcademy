@@ -22,7 +22,7 @@ public class SecurityConfig {
                         .requestMatchers("/courses").permitAll()
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/assets/**").permitAll()
-                        .requestMatchers("/displayMessages").hasRole("ADMIN")
+                        .requestMatchers("/displayMessages").hasRole("Admin")
                         .requestMatchers("/updateProfile").authenticated()
                         .requestMatchers("/login", "/logout").permitAll() // 允许访问登录和登出页面
                         .requestMatchers("/createUser").permitAll()

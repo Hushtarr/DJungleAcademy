@@ -27,8 +27,8 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public UserDTO findByUserName(String userName) {
-        User user = userRepository.findByUserName(userName).orElseThrow(() -> new UserNotFoundException("User could not be found"));
+    public UserDTO findByEmail(String userName) {
+        User user = userRepository.findByEmail(userName);
         return globalMapper.convert(user, UserDTO.class);
     }
 
