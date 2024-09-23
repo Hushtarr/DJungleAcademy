@@ -39,19 +39,7 @@ public class ContactController {
         return "redirect:/contact";
     }
 
-    @GetMapping("/displayMessages")
-    public String displayMessages(Model model) {
-        model.addAttribute("contactMsgs", contactService.getAll());
-        System.out.println(contactService.getAll().size());
-        return "message";
-    }
 
-
-    @PostMapping("/closeMsg/{id}")
-    public String closeMsg(@PathVariable Long id) {
-        contactService.updateMsgStatus(id);
-        return "redirect:/displayMessages";
-    }
 
 
 

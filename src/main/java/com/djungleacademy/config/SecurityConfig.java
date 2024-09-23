@@ -15,18 +15,9 @@ public class SecurityConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/home").permitAll()
-                        .requestMatchers("/holidays/**").permitAll()
-                        .requestMatchers("/contact").permitAll()
-                        .requestMatchers("/saveMsg").permitAll()
-                        .requestMatchers("/courses").permitAll()
-                        .requestMatchers("/about").permitAll()
-                        .requestMatchers("/assets/**").permitAll()
-                        .requestMatchers("/displayMessages").hasRole("Admin")
-                        .requestMatchers("/updateProfile").authenticated()
-                        .requestMatchers("/login", "/logout").permitAll() // 允许访问登录和登出页面
-                        .requestMatchers("/createUser").permitAll()
-                        .anyRequest().authenticated() // 所有其他请求都需要认证
+                        .requestMatchers(publicPages()).permitAll()
+                        .requestMatchers("/private/**").hasRole("Admin")
+                        .anyRequest().authenticated()
                 )
 
 //                .oauth2Login(oauth2 -> oauth2
@@ -52,4 +43,19 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    private String[] publicPages() {
+        return new String[] {
+                "/",
+                "/home",
+                "/holidays/**",
+                "/contact",
+                "/saveMsg",
+                "/courses",
+                "/about",
+                "/assets/**",
+                "/login",
+                "/logout",
+                "/createUser"
+        };
+}
 }
