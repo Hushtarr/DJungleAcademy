@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum UserType {
-        ADMIN("Admin"),PROFESSOR("Professor"),STUDENT("Student");
+        ADMIN("Admin"),INSTRUCTOR("Instructor"),STUDENT("Student");
         private final String value;
 
 }

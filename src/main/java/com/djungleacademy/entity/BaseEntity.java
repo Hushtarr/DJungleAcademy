@@ -32,6 +32,9 @@ public class BaseEntity {
     @Column(nullable = false)
     private String updatedBy;
 
+    @Column
+    private Boolean isDeleted = false;
+
     private String getLoginUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (authentication == null) ? "anonymousUser" : authentication.getName();

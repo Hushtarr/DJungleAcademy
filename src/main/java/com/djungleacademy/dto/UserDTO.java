@@ -19,6 +19,7 @@ import lombok.Setter;
         @FieldMatch(fieldOne = "email", fieldTwo = "confirmEmail", message = "email must match")
 })
 public class UserDTO {
+    private Long id;
 
     @NotBlank(message="First Name must not be blank")
     private String firstName;

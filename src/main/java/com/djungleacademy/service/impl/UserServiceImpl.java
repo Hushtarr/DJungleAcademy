@@ -4,13 +4,16 @@ import com.djungleacademy.dto.UserDTO;
 import com.djungleacademy.entity.Address;
 import com.djungleacademy.entity.User;
 import com.djungleacademy.enums.UserType;
-import com.djungleacademy.exceptions.UserNotFoundException;
+import com.djungleacademy.exceptions.UserNotFoundEx;
 import com.djungleacademy.mapper.GlobalMapper;
 import com.djungleacademy.repository.UserRepository;
 import com.djungleacademy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(UserDTO userDTO) {
-        User user = userRepository.findByUserName(userDTO.getUserName()).orElseThrow(() -> new UserNotFoundException("User not found"));
+        User user = userRepository.findByUserName(userDTO.getUserName()).orElseThrow(() -> new UserNotFoundEx("User not found"));
         Address updatedAddress = globalMapper.convert(userDTO.getAddress(), Address.class);
         user.setAddress(updatedAddress);
         user.setFirstName(userDTO.getFirstName());
@@ -44,5 +47,12 @@ public class UserServiceImpl implements UserService {
         user.setPhone(userDTO.getPhone());
         userRepository.save(user);
 
+    }
+
+    @Override
+    public List<UserDTO> findByRole(UserType userType) {
+        return userRepository.findByUserType(userType).stream()
+                .map(user->globalMapper.convert(user,UserDTO.class))
+                .collect(Collectors.toList());
     }
 }

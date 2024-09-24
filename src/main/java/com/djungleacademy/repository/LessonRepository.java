@@ -1,9 +1,10 @@
 package com.djungleacademy.repository;
 
-import com.djungleacademy.entity.Role;
+import com.djungleacademy.entity.Lesson;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface LessonRepository extends JpaRepository<Lesson, Long> {
+
 }
