@@ -1,23 +1,24 @@
 package com.djungleacademy.dto;
+
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LessonDTO {
+public class CourseDTO {
     private Long id;
 
     @NotBlank(message="Name must not be blank")
     private String name;
 
-    @NotBlank(message="Must have an instructor")
-    private UserDTO instructorDTO;
+    @NotNull(message="Must have a professor")
+    private UserDTO professorDTO;
 
-    @NotBlank(message="Credit must not be blank")
-    private Integer credit;
-
-    private CourseDTO courseDTO;
+    private List<LessonDTO> lessons;
 }

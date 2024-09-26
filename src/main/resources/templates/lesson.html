@@ -51,13 +51,18 @@
               <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
               <label class="control-label" for="LessonName">Lesson Name</label>
               <input type="text" class="form-control" id="LessonName" th:field="*{name}" required placeholder="Enter lesson name">
+              <label class="control-label" for="LessonCredit">Lesson Credit</label>
+              <input type="text" class="form-control" id="LessonCredit" th:field="*{credit}" required placeholder="Enter lesson credit">
               <label class="control-label" for="LessonInstructor">Lesson Instructor</label>
-              <select class="form-control" id="LessonInstructor" th:field="*{instructor.id}" required>
+              <select class="form-control" id="LessonInstructor" th:field="*{instructorDTO.id}" required>
                 <option value="" disabled selected>Select an instructor</option>
                 <option th:each="instructor : ${instructors}" th:value="${instructor.id}" th:text="${instructor.firstName}"></option>
               </select>
-              <label class="control-label" for="LessonCredit">Lesson Credit</label>
-              <input type="text" class="form-control" id="LessonCredit" th:field="*{credit}" required placeholder="Enter lesson credit">
+              <label class="control-label" for="Course">Course</label>
+              <select class="form-control" id="Course" th:field="*{courseDTO.id}" required>
+                <option value="" disabled selected>Select a course</option>
+                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+              </select>
             </div>
           </div>
           <div class="modal-footer border-top-0 d-flex justify-content-center">
@@ -84,22 +89,23 @@
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Name</th>
+        <th scope="col">Course</th>
         <th scope="col">Instructor</th>
         <th scope="col">Credit</th>
-        <th scope="col">Actions</th>
-        <th></th>
+        <th scope="col" class="text-center">Actions</th>
+
       </tr>
       </thead>
       <tbody>
       <tr th:each="lesson : ${Lessons}">
         <td th:text="${lesson.id}"></td>
         <td th:text="${lesson.name}"></td>
-        <td th:text="${lesson.instructor.firstName}"></td>
+        <td th:text="${lesson.courseDTO.name}"></td>
+        <td th:text="${lesson.instructorDTO.firstName}"></td>
         <td th:text="${lesson.credit}"></td>
-        <td>
+        <td  class="text-center">
           <a th:href="@{/private/deleteLesson(id=${lesson.id})}" class="btn btn-warning">Delete</a>
-        </td>
-        <td>
+
           <a th:href="@{/private/updateLesson(id=${lesson.id})}" class="btn btn-warning">Update</a>
         </td>
       </tr>

@@ -1,7 +1,6 @@
 package com.djungleacademy.service.impl;
 
 import com.djungleacademy.dto.LessonDTO;
-import com.djungleacademy.dto.UserDTO;
 import com.djungleacademy.entity.Lesson;
 import com.djungleacademy.exceptions.LessonNotFoundEx;
 import com.djungleacademy.mapper.GlobalMapper;
@@ -38,6 +37,10 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public void delete(Long id) {
-        lessonRepository.findById(id).ifPresent(lesson->lesson.setIsDeleted(true));
+        Lesson lesson = lessonRepository.findById(id)
+                .orElseThrow(() -> new LessonNotFoundEx("Lesson not found with id: " + id));
+
+        lesson.setIsDeleted(true);
+        lessonRepository.save(lesson);
     }
 }

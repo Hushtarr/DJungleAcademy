@@ -1,0 +1,17 @@
+spring:
+    application:
+        name: DJungleAcademy
+    datasource:
+        password: admin
+        url: jdbc:postgresql://localhost:5432/JungleAcademy
+        username: postgres
+    jpa:
+        defer-datasource-initialization: true
+        hibernate:
+            ddl-auto: create
+        show-sql: true
+    sql:
+        init:
+            mode: always
+    thymeleaf:
+        cache: false

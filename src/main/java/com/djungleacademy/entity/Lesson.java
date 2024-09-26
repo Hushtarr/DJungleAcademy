@@ -1,9 +1,6 @@
 package com.djungleacademy.entity;
 
-import com.djungleacademy.dto.UserDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,8 +13,12 @@ public class Lesson extends BaseEntity{
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private User instructor;
 
     private Integer credit;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "course_id")
+    private Course course;
 }

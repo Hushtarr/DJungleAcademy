@@ -55,4 +55,10 @@ public class UserServiceImpl implements UserService {
                 .map(user->globalMapper.convert(user,UserDTO.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public UserDTO findById(Long id) {
+        User user= userRepository.findById(id).orElseThrow(()->new UserNotFoundEx("no such person"));
+        return globalMapper.convert(user,UserDTO.class);
+    }
 }

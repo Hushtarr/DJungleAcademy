@@ -14,4 +14,14 @@ INSERT INTO users (id,first_name, last_name, user_name, password, email, phone, 
 VALUES
 ( 1,'John', 'Doe', 'johndoe', '$2a$10$6s9jJ3A08wIvvRi1cUqaW.AxC5z1aPswLXrd7w1WMEV8w5auk2EBu', 'johndoe@example.com', '123-456-7890', 'ADMIN', 'admin', 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,false),
 ( 2,'Jane', 'Smith', 'janesmith', '$2a$10$6s9jJ3A08wIvvRi1cUqaW.AxC5z1aPswLXrd7w1WMEV8w5auk2EBu', 'janesmith@example.com', '987-654-3210', 'INSTRUCTOR', 'admin', 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,false),
-( 3,'Bob', 'Johnson', 'bobjohnson', '$2a$10$6s9jJ3A08wIvvRi1cUqaW.AxC5z1aPswLXrd7w1WMEV8w5auk2EBu', 'bobjohnson@example.com', '555-555-5555', 'STUDENT', 'admin', 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,false);
+( 3,'Bob', 'Johnson', 'bobjohnson', '$2a$10$6s9jJ3A08wIvvRi1cUqaW.AxC5z1aPswLXrd7w1WMEV8w5auk2EBu', 'bobjohnson@example.com', '555-555-5555', 'STUDENT', 'admin', 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,false),
+( 4,'Tom', 'Jackson', 'tomjackson', '$2a$10$6s9jJ3A08wIvvRi1cUqaW.AxC5z1aPswLXrd7w1WMEV8w5auk2EBu', 'tomjackson@example.com', '555-555-5555', 'PROFESSOR', 'admin', 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,false),
+( 5,'Carl', 'Jhonson', 'cj', '$2a$10$6s9jJ3A08wIvvRi1cUqaW.AxC5z1aPswLXrd7w1WMEV8w5auk2EBu', 'cj@example.com', '555-555-5555', 'PROFESSOR', 'admin', 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,false);
+
+;
+
+
+-- INSERT INTO courses (name, professor_id,  created_at, updated_at, created_by, updated_by, is_deleted)
+-- VALUES
+--     ('Mathematics', 4,  NOW(), NOW(), 'admin', 'admin', FALSE),
+--     ('Physics', 5,  NOW(), NOW(), 'admin', 'admin', FALSE);
