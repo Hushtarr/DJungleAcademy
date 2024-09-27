@@ -52,7 +52,7 @@
                             <label class="control-label" for="CourseName">Course Name</label>
                             <input type="text" class="form-control" id="CourseName" th:field="*{name}" required placeholder="Enter course name">
                             <label class="control-label" for="CourseProfessor">Course Professor</label>
-                            <select class="form-control" id="CourseProfessor" th:field="*{professorDTO.id}" required>
+                            <select class="form-control" id="CourseProfessor" th:field="*{professor}" required>
                                 <option value="" disabled selected>Select a professor</option>
                                 <option th:each="professor : ${professors}" th:value="${professor.id}" th:text="${professor.firstName}"></option>
                             </select>
@@ -85,21 +85,22 @@
                 <th scope="col">Course</th>
                 <th scope="col">Professor</th>
                 <th scope="col" class="text-center">Actions</th>
-
             </tr>
             </thead>
+
             <tbody>
             <tr th:each="course : ${Courses}">
                 <td th:text="${course.id}"></td>
                 <td th:text="${course.name}"></td>
                 <td th:text="${#lists.size(course.lessons)}"></td>
-                <td th:text="${course.professorDTO.firstName}"></td>
+                <td th:text="${course.professor.firstName}"></td>
                 <td  class="text-center">
                     <a th:href="@{/private/deleteCourse(id=${course.id})}" class="btn btn-warning">Delete</a>
                     <a th:href="@{/private/updateCourse(id=${course.id})}" class="btn btn-warning">Update</a>
                 </td>
             </tr>
             </tbody>
+
         </table>
     </div>
 

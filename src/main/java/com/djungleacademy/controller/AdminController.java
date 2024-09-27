@@ -2,6 +2,7 @@ package com.djungleacademy.controller;
 
 import com.djungleacademy.dto.CourseDTO;
 import com.djungleacademy.dto.LessonDTO;
+import com.djungleacademy.dto.UserDTO;
 import com.djungleacademy.enums.UserType;
 import com.djungleacademy.service.ContactService;
 import com.djungleacademy.service.CourseService;

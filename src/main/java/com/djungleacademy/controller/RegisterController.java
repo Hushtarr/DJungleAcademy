@@ -2,6 +2,7 @@ package com.djungleacademy.controller;
 
 import com.djungleacademy.dto.UserDTO;
 import com.djungleacademy.entity.User;
+import com.djungleacademy.enums.UserType;
 import com.djungleacademy.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class RegisterController {
     @GetMapping("/createUser")
     public String displayRegisterPage(Model model){
         model.addAttribute("user", new UserDTO());
+        model.addAttribute("roles", UserType.values());
         return "register";
     }
 
@@ -32,6 +34,7 @@ public class RegisterController {
             log.error("Register failed due to : {}", bindingResult.getAllErrors());
             return "register";
         }
+
         userService.save(userDTO);
         return "redirect:/login?register=true";
     }

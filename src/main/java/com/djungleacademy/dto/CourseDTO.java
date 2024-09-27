@@ -18,7 +18,7 @@ public class CourseDTO {
     private String name;
 
     @NotNull(message="Must have a professor")
-    private UserDTO professorDTO;
+    private UserDTO professor;
 
     private List<LessonDTO> lessons;
 }

@@ -2,6 +2,7 @@ package com.djungleacademy.service.impl;
 
 import com.djungleacademy.dto.CourseDTO;
 import com.djungleacademy.entity.Course;
+import com.djungleacademy.entity.User;
 import com.djungleacademy.exceptions.CourseNotFoundEx;
 import com.djungleacademy.mapper.GlobalMapper;
 import com.djungleacademy.repository.CourseRepository;

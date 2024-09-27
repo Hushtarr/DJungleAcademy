@@ -16,7 +16,8 @@ VALUES
 ( 2,'Jane', 'Smith', 'janesmith', '$2a$10$6s9jJ3A08wIvvRi1cUqaW.AxC5z1aPswLXrd7w1WMEV8w5auk2EBu', 'janesmith@example.com', '987-654-3210', 'INSTRUCTOR', 'admin', 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,false),
 ( 3,'Bob', 'Johnson', 'bobjohnson', '$2a$10$6s9jJ3A08wIvvRi1cUqaW.AxC5z1aPswLXrd7w1WMEV8w5auk2EBu', 'bobjohnson@example.com', '555-555-5555', 'STUDENT', 'admin', 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,false),
 ( 4,'Tom', 'Jackson', 'tomjackson', '$2a$10$6s9jJ3A08wIvvRi1cUqaW.AxC5z1aPswLXrd7w1WMEV8w5auk2EBu', 'tomjackson@example.com', '555-555-5555', 'PROFESSOR', 'admin', 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,false),
-( 5,'Carl', 'Jhonson', 'cj', '$2a$10$6s9jJ3A08wIvvRi1cUqaW.AxC5z1aPswLXrd7w1WMEV8w5auk2EBu', 'cj@example.com', '555-555-5555', 'PROFESSOR', 'admin', 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,false);
+( 5,'Carl', 'Jhonson', 'cj', '$2a$10$6s9jJ3A08wIvvRi1cUqaW.AxC5z1aPswLXrd7w1WMEV8w5auk2EBu', 'cj@example.com', '555-555-5555', 'PROFESSOR', 'admin', 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,false),
+( 6,'Cena', 'jk', 'janesmiths', '$2a$10$6s9jJ3A08wIvvRi1cUqaW.AxC5z1aPswLXrd7w1WMEV8w5auk2EBu', 'cena@example.com', '987-654-3210', 'INSTRUCTOR', 'admin', 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,false)
 
 ;
 

@@ -26,7 +26,6 @@ public class UserServiceImpl implements UserService {
     public void save(UserDTO userDTO) {
         User user=globalMapper.convert(userDTO, User.class);
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setUserType(UserType.STUDENT);
         userRepository.save(user);
     }
 
