@@ -1,6 +1,7 @@
 package com.djungleacademy.service;
 
 import com.djungleacademy.dto.CourseDTO;
+import com.djungleacademy.dto.LessonDTO;
 
 import java.util.List;
 
@@ -16,4 +17,7 @@ public interface CourseService {
     void updateCourse(Long id, CourseDTO courseDTO);
 
     void deleteCourse(Long id);
+
+    List<CourseDTO> findRemainingCourses();
+
 }

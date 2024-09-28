@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>D'Jungle Academy - Course Update</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style-starter.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        .form-control {
+            border-radius: 5px;
+        }
+        .btn-update {
+            background-color: #4CAF50;
+            border: none;
+        }
+        .btn-update:hover {
+            background-color: #45a049;
+        }
+        .btn-back {
+            background-color: #f44336;
+            border: none;
+        }
+        .btn-back:hover {
+            background-color: #da190b;
+        }
+    </style>
+</head>
+
+<body>
+
+<div th:replace="~{header :: header}">...</div>
+
+<section class="inner-banner py-5">
+    <div class="w3l-breadcrumb py-lg-5">
+        <div class="container pt-4 pb-sm-4">
+            <h4 class="inner-text-title pt-5">Lesson Update</h4>
+            <ul class="breadcrumbs-custom-path">
+                <li><a th:href="@{/home}">Home</a></li>
+                <li class="active"><i class="fas fa-angle-right"></i> Lesson Update</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="w3l-contact py-5" id="contact">
+    <div class="container py-md-5 py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center mb-0">Update Lesson</h3>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/private/updateLesson/{id}(id=${Lesson.id})}" method="post" class="needs-validation" th:object="${Lesson}" novalidate>
+                            <div class="mb-3">
+                                <label for="lessonId" class="form-label">Lesson ID</label>
+                                <input type="text" th:field="*{id}" id="lessonId" class="form-control" readonly/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="lessonName" class="form-label">Lesson Name</label>
+                                <input type="text" th:field="*{name}" id="lessonName" class="form-control" required/>
+                                <div class="invalid-feedback">Please provide a lesson name.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="lessonCredit" class="form-label">Lesson Credit</label>
+                                <input type="text" th:field="*{credit}" id="lessonCredit" class="form-control" required/>
+                                <div class="invalid-feedback">Please provide a lesson credit.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="LessonInstructor" class="form-label">Lesson Instructor</label>
+                                <select class="form-select" id="LessonInstructor" th:field="*{instructor.id}" required>
+                                    <option value="" disabled selected>Select a Instructor</option>
+                                    <option th:each="instructor : ${instructors}" th:value="${instructor.id}" th:text="${instructor.firstName + ' ' + instructor.lastName}"></option>
+                                </select>
+                                <div class="invalid-feedback">Please select a instructor.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="LessonCourse" class="form-label">Lesson Course</label>
+                                <select class="form-select" id="LessonCourse" th:field="*{course.id}" required>
+                                    <option value="" disabled selected>Select a course</option>
+                                    <option th:each="course : ${Courses}" th:value="${course.id}" th:text="${course.name}"></option>
+                                </select>
+                                <div class="invalid-feedback">Please select a course.</div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-update me-2">
+                                    <i class="fas fa-save me-2"></i>Update
+                                </button>
+                                <a th:href="@{/dashboard}" class="btn btn-danger btn-back">
+                                    <i class="fas fa-arrow-left me-2"></i>Back
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div th:replace="~{footer :: footer}">...</div>
+
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/js/theme-change.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script>
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+</body>
+</html>

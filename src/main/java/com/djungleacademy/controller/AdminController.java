@@ -42,9 +42,9 @@ public class AdminController {
     @GetMapping("/displayLessons")
     public String displayLessons(Model model) {
         model.addAttribute("Lesson",new LessonDTO());
-        model.addAttribute("Lessons", lessonService.findAll());
+        model.addAttribute("Lessons", lessonService.findRemainingLessons());
         model.addAttribute("instructors",userService.findByRole(UserType.INSTRUCTOR));
-        model.addAttribute("courses",courseService.findAll());
+        model.addAttribute("courses",courseService.findRemainingCourses());
         return "lesson";
     }
 
@@ -58,23 +58,32 @@ public class AdminController {
     public String updateLesson(@PathVariable Long id,Model model) {
         model.addAttribute("Lesson",lessonService.findById(id));
         model.addAttribute("instructors",userService.findByRole(UserType.INSTRUCTOR));
-        model.addAttribute("courses",courseService.findAll());
-        return "lesson";
+        model.addAttribute("courses",courseService.findRemainingCourses());
+        return "lesson_update";
     }
 
+//    todo:update function to be done:controller & service layer
     @PostMapping("/updateLesson/{id}")
     public String updateLesson(@PathVariable Long id, @ModelAttribute Lesson lesson) {
         LessonDTO lessonDTO = lessonService.findById(id);
         lessonService.save(lessonDTO);
-        return "redirect:/private/lessonDetails";
+        return "redirect:/private/displayLessons";
+    }
+
+    @PostMapping("/deleteLesson/{id}")
+    public String deleteLesson(@PathVariable("id")Long id) {
+        lessonService.delete(id);
+        return "redirect:/private/displayLessons";
     }
 
 
     @GetMapping("/displayCourses")
     public String displayCourses(Model model) {
         model.addAttribute("CourseDTO",new CourseDTO());
-        model.addAttribute("Courses",courseService.findAll());
+        model.addAttribute("Courses",courseService.findRemainingCourses());
         model.addAttribute("professors",userService.findByRole(UserType.PROFESSOR));
+        System.out.println(courseService.findRemainingCourses().size());
+        System.out.println(lessonService.findRemainingLessons().size());
         return "course";
     }
 
@@ -89,10 +98,11 @@ public class AdminController {
     public String updateCourse(@PathVariable("id") Long id,Model model) {
         model.addAttribute("Course",courseService.getCourseById(id));
         model.addAttribute("professors",userService.findByRole(UserType.PROFESSOR));
-        model.addAttribute("courses",courseService.findAll());
+        model.addAttribute("courses",courseService.findRemainingCourses());
         return "course_update";
     }
 
+    //    todo:update function to be done:controller & service layer
     @PostMapping("/updateCourse/{id}")
     public String updateLesson(@ModelAttribute CourseDTO courseDTO) {
         courseService.save(courseDTO);

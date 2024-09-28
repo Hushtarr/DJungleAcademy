@@ -1,6 +1,7 @@
 package com.djungleacademy.service.impl;
 
 import com.djungleacademy.dto.LessonDTO;
+import com.djungleacademy.entity.Course;
 import com.djungleacademy.entity.Lesson;
 import com.djungleacademy.exceptions.LessonNotFoundEx;
 import com.djungleacademy.mapper.GlobalMapper;
@@ -31,6 +32,7 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public List<LessonDTO> findAll() {
         return lessonRepository.findAll().stream()
+                .filter(lesson-> !lesson.getIsDeleted())
                 .map(lesson->mapper.convert(lesson,LessonDTO.class))
                 .collect(Collectors.toList());
     }
@@ -41,6 +43,15 @@ public class LessonServiceImpl implements LessonService {
                 .orElseThrow(() -> new LessonNotFoundEx("Lesson not found with id: " + id));
 
         lesson.setIsDeleted(true);
+        Course  course=lesson.getCourse();
+        course.getLessons().remove(lesson);
         lessonRepository.save(lesson);
+    }
+
+    @Override
+    public List<LessonDTO> findRemainingLessons() {
+        return lessonRepository.findAllByIsDeleted(false).stream()
+                .map(lesson->mapper.convert(lesson,LessonDTO.class))
+                .collect(Collectors.toList());
     }
 }

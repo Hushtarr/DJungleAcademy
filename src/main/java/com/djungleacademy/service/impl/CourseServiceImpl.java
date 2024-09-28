@@ -1,6 +1,7 @@
 package com.djungleacademy.service.impl;
 
 import com.djungleacademy.dto.CourseDTO;
+import com.djungleacademy.dto.LessonDTO;
 import com.djungleacademy.entity.Course;
 import com.djungleacademy.entity.User;
 import com.djungleacademy.exceptions.CourseNotFoundEx;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,5 +53,12 @@ public class CourseServiceImpl implements CourseService {
         course.setIsDeleted(true);
         courseRepository.save(course);
         }
+
+    @Override
+    public List<CourseDTO> findRemainingCourses() {
+        return courseRepository.findAllByIsDeleted(false).stream()
+                .map(course->mapper.convert(course, CourseDTO.class))
+                .collect(Collectors.toList());
     }
+}
 

@@ -24,4 +24,5 @@ VALUES
 
 INSERT INTO courses (name, professor_id,  created_at, updated_at, created_by, updated_by, is_deleted)
 VALUES
+--     ('Mathematics', 4,  NOW(), NOW(), 'admin', 'admin', FALSE),
     ('Physics', 5,  NOW(), NOW(), 'admin', 'admin', FALSE);
