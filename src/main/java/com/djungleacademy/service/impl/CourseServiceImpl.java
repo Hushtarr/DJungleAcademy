@@ -34,6 +34,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<CourseDTO> findAll() {
         return courseRepository.findAll().stream()
+                .filter(obj-> obj.getIsDeleted().equals(false))
                 .map(obj->mapper.convert(obj,CourseDTO.class))
                 .toList();
     }

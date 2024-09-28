@@ -52,7 +52,7 @@
                             <label class="control-label" for="CourseName">Course Name</label>
                             <input type="text" class="form-control" id="CourseName" th:field="*{name}" required placeholder="Enter course name">
                             <label class="control-label" for="CourseProfessor">Course Professor</label>
-                            <select class="form-control" id="CourseProfessor" th:field="*{professor}" required>
+                            <select class="form-control" id="CourseProfessor" th:field="*{professor.id}" required>
                                 <option value="" disabled selected>Select a professor</option>
                                 <option th:each="professor : ${professors}" th:value="${professor.id}" th:text="${professor.firstName}"></option>
                             </select>
@@ -95,8 +95,10 @@
                 <td th:text="${#lists.size(course.lessons)}"></td>
                 <td th:text="${course.professor.firstName}"></td>
                 <td  class="text-center">
-                    <a th:href="@{/private/deleteCourse(id=${course.id})}" class="btn btn-warning">Delete</a>
-                    <a th:href="@{/private/updateCourse(id=${course.id})}" class="btn btn-warning">Update</a>
+                    <form th:action="@{/private/deleteCourse/{id}(id=${course.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-warning" onclick="return confirm('Are you sure you want to delete this course?');">Delete</button>
+                    </form>
+                    <a th:href="@{/private/updateCourse/{id}(id=${course.id})}" class="btn btn-warning">Update</a>
                 </td>
             </tr>
             </tbody>
