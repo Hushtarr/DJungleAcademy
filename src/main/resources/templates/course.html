@@ -92,7 +92,7 @@
             <tr th:each="course : ${Courses}">
                 <td th:text="${course.id}"></td>
                 <td th:text="${course.name}"></td>
-                <td th:text="${course.lessons.size()}"></td>
+                <td th:text="${course.activeLessonsCount}"></td>
                 <td th:text="${course.professor.firstName}"></td>
                 <td  class="text-center">
                     <form th:action="@{/private/deleteCourse/{id}(id=${course.id})}" method="post" style="display:inline;">

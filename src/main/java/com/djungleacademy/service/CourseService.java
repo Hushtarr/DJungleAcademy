@@ -18,6 +18,5 @@ public interface CourseService {
 
     void deleteCourse(Long id);
 
-    List<CourseDTO> findRemainingCourses();
 
 }

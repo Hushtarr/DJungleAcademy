@@ -21,4 +21,5 @@ public class CourseDTO {
     private UserDTO professor;
 
     private List<LessonDTO> lessons;
+    private Long activeLessonsCount;
 }

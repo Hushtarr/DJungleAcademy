@@ -10,6 +10,7 @@ import org.hibernate.annotations.Filter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "lessons")
 public class Lesson extends BaseEntity{
 
     private String name;
@@ -20,6 +21,5 @@ public class Lesson extends BaseEntity{
     private Integer credit;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "course_id")
     private Course course;
 }

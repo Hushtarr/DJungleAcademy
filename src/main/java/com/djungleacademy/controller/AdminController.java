@@ -42,9 +42,9 @@ public class AdminController {
     @GetMapping("/displayLessons")
     public String displayLessons(Model model) {
         model.addAttribute("Lesson",new LessonDTO());
-        model.addAttribute("Lessons", lessonService.findRemainingLessons());
+        model.addAttribute("Lessons", lessonService.findAll());
         model.addAttribute("instructors",userService.findByRole(UserType.INSTRUCTOR));
-        model.addAttribute("courses",courseService.findRemainingCourses());
+        model.addAttribute("courses",courseService.findAll());
         return "lesson";
     }
 
@@ -58,7 +58,7 @@ public class AdminController {
     public String updateLesson(@PathVariable Long id,Model model) {
         model.addAttribute("Lesson",lessonService.findById(id));
         model.addAttribute("instructors",userService.findByRole(UserType.INSTRUCTOR));
-        model.addAttribute("courses",courseService.findRemainingCourses());
+        model.addAttribute("courses",courseService.findAll());
         return "lesson_update";
     }
 
@@ -80,10 +80,10 @@ public class AdminController {
     @GetMapping("/displayCourses")
     public String displayCourses(Model model) {
         model.addAttribute("CourseDTO",new CourseDTO());
-        model.addAttribute("Courses",courseService.findRemainingCourses());
+        model.addAttribute("Courses",courseService.findAll());
         model.addAttribute("professors",userService.findByRole(UserType.PROFESSOR));
-        System.out.println(courseService.findRemainingCourses().size());
-        System.out.println(lessonService.findRemainingLessons().size());
+        System.out.println(courseService.findAll().size());
+        System.out.println(lessonService.findAll().size());
         return "course";
     }
 
@@ -98,7 +98,7 @@ public class AdminController {
     public String updateCourse(@PathVariable("id") Long id,Model model) {
         model.addAttribute("Course",courseService.getCourseById(id));
         model.addAttribute("professors",userService.findByRole(UserType.PROFESSOR));
-        model.addAttribute("courses",courseService.findRemainingCourses());
+        model.addAttribute("courses",courseService.findAll());
         return "course_update";
     }
 

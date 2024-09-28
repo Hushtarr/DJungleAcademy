@@ -8,6 +8,7 @@ import com.djungleacademy.exceptions.CourseNotFoundEx;
 import com.djungleacademy.mapper.GlobalMapper;
 import com.djungleacademy.repository.CourseRepository;
 import com.djungleacademy.service.CourseService;
+import com.djungleacademy.service.LessonService;
 import com.djungleacademy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,6 @@ import java.util.stream.Collectors;
 public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final GlobalMapper mapper;
-    private final UserService userService;
 
     @Override
     public void save(CourseDTO courseDTO) {
@@ -36,9 +36,17 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<CourseDTO> findAll() {
         return courseRepository.findAll().stream()
-                .filter(obj-> obj.getIsDeleted().equals(false))
-                .map(obj->mapper.convert(obj,CourseDTO.class))
-                .toList();
+                .filter(course -> !course.getIsDeleted())
+                .map(course -> {
+                    CourseDTO dto = mapper.convert(course, CourseDTO.class);
+                    long activeCount = course.getLessons()
+                            .stream()
+                            .filter(lesson -> !lesson.getIsDeleted())
+                            .count();
+                    dto.setActiveLessonsCount(activeCount);
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -54,11 +62,6 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.save(course);
         }
 
-    @Override
-    public List<CourseDTO> findRemainingCourses() {
-        return courseRepository.findAllByIsDeleted(false).stream()
-                .map(course->mapper.convert(course, CourseDTO.class))
-                .collect(Collectors.toList());
-    }
+
 }
 
