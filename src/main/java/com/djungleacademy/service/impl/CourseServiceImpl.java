@@ -28,8 +28,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CourseDTO getCourseById(Long id) {
+    public CourseDTO findById(Long id) {
         Course course=courseRepository.findById(id).orElseThrow(()->new CourseNotFoundEx("no such course.html"));
+        return mapper.convert(course, CourseDTO.class);
+    }
+
+    @Override
+    public CourseDTO findByName(String courseName) {
+        Course course=courseRepository.findByIsDeletedAndName(false,courseName);
         return mapper.convert(course, CourseDTO.class);
     }
 

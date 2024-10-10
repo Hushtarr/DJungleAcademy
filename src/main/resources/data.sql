@@ -25,16 +25,16 @@ VALUES
 
 
 
--- INSERT INTO courses (name, professor_id, created_at, updated_at, created_by, updated_by, is_deleted)
--- VALUES
---     ('Mathematics', 4, NOW(), NOW(), 'admin', 'admin', FALSE),
---     ('Physics', 5, NOW(), NOW(), 'admin', 'admin', FALSE),
---     ('Computer Science', 8, NOW(), NOW(), 'admin', 'admin', FALSE),
---     ('History', 10, NOW(), NOW(), 'admin', 'admin', FALSE),
---     ('Chemistry', 9, NOW(), NOW(), 'admin', 'admin', FALSE);
+INSERT INTO courses (name, professor_id, created_at, updated_at, created_by, updated_by, is_deleted)
+VALUES
+    ('Mathematics', 4, NOW(), NOW(), 'admin', 'admin', FALSE),
+    ('Physics', 5, NOW(), NOW(), 'admin', 'admin', FALSE),
+    ('Computer Science', 8, NOW(), NOW(), 'admin', 'admin', FALSE),
+    ('History', 10, NOW(), NOW(), 'admin', 'admin', FALSE),
+    ('Chemistry', 9, NOW(), NOW(), 'admin', 'admin', FALSE);
 
--- INSERT INTO lessons (name, instructor_id, credit, course_id,created_at, updated_at, created_by, updated_by, is_deleted)
--- VALUES
---     ('Algebra Basics', 2, 3, 1,NOW(), NOW(), 'admin', 'admin', FALSE),
---     ('Introduction to Physics', 6, 4,2, NOW(), NOW(), 'admin', 'admin', FALSE),
---     ('Computer Networks', 7, 3, 3,NOW(), NOW(), 'admin', 'admin', FALSE);
+INSERT INTO lessons (name, instructor_id, credit, course_id,created_at, updated_at, created_by, updated_by, is_deleted)
+VALUES
+    ('Algebra Basics', 2, 3, 1,NOW(), NOW(), 'admin', 'admin', FALSE),
+    ('Introduction to Physics', 6, 4,2, NOW(), NOW(), 'admin', 'admin', FALSE),
+    ('Computer Networks', 7, 3, 3,NOW(), NOW(), 'admin', 'admin', FALSE);

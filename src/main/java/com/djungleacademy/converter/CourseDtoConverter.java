@@ -18,7 +18,7 @@ public class CourseDtoConverter implements Converter<String, CourseDTO> {
             throw new CourseNotFoundEx("Course with id " + source + " not found");
         }
         Long courseId = Long.valueOf(source);
-        CourseDTO courseDTO = courseService.getCourseById(courseId);
+        CourseDTO courseDTO = courseService.findById(courseId);
         if (courseDTO == null) {
             throw new CourseNotFoundEx("Course with id " + courseId + " not found");
         }

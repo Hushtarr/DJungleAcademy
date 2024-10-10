@@ -7,7 +7,10 @@ import com.djungleacademy.exceptions.LessonNotFoundEx;
 import com.djungleacademy.mapper.GlobalMapper;
 import com.djungleacademy.repository.CourseRepository;
 import com.djungleacademy.repository.LessonRepository;
+import com.djungleacademy.repository.UserRepository;
+import com.djungleacademy.service.CourseService;
 import com.djungleacademy.service.LessonService;
+import com.djungleacademy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +21,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class LessonServiceImpl implements LessonService {
     private final LessonRepository lessonRepository;
+    private final CourseService courseService;
     private final GlobalMapper mapper;
     private final CourseRepository courseRepository;
+    private final UserRepository userRepository;
+    private final UserService userService;
+
+
     @Override
     public LessonDTO findById(Long id) {
         Lesson lesson=lessonRepository.findById(id).orElseThrow(()->new LessonNotFoundEx("Lesson not found"));
@@ -28,13 +36,21 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public void save(LessonDTO lessonDTO) {
-        lessonRepository.save(mapper.convert(lessonDTO, Lesson.class));
+        Lesson lesson=mapper.convert(lessonDTO, Lesson.class);
+        lesson.setCourse(courseRepository.findByIsDeletedAndName(false,lessonDTO.getCourse()));
+        lesson.setInstructor(userRepository.findByFirstName(lessonDTO.getInstructor()));
+        lessonRepository.save(lesson);
     }
 
     @Override
     public List<LessonDTO> findAll() {
         return lessonRepository.findAllByIsDeletedFalse().stream()
-                .map(lesson->mapper.convert(lesson,LessonDTO.class))
+                .map(lesson -> {
+                    LessonDTO lessonDTO = mapper.convert(lesson, LessonDTO.class);
+                    lessonDTO.setCourse(lesson.getCourse().getName());
+                    lessonDTO.setInstructor(lesson.getInstructor().getFirstName());
+                    return lessonDTO;
+                })
                 .collect(Collectors.toList());
     }
 

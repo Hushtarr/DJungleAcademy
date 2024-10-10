@@ -14,10 +14,10 @@ public class LessonDTO {
     private String name;
 
     @NotBlank(message="Must have an instructor")
-    private UserDTO instructor;
+    private String instructor;
 
     @NotBlank(message="Credit must not be blank")
     private Integer credit;
 
-    private CourseDTO course;
+    private String course;
 }

@@ -1,7 +1,9 @@
-package com.djungleacademy.controller;
+package com.djungleacademy.controllers;
 
+import com.djungleacademy.dto.ContactDTO;
 import com.djungleacademy.dto.CourseDTO;
 import com.djungleacademy.dto.LessonDTO;
+import com.djungleacademy.dto.common.ApiInfo;
 import com.djungleacademy.entity.Lesson;
 import com.djungleacademy.enums.UserType;
 import com.djungleacademy.service.ContactService;
@@ -9,42 +11,50 @@ import com.djungleacademy.service.CourseService;
 import com.djungleacademy.service.LessonService;
 import com.djungleacademy.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequiredArgsConstructor
-@RequestMapping("/private")
-public class AdminController {
+@RequestMapping(
+        value = "/api/admin",
+        produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+
+
+public class AdminControllers {
     private final ContactService contactService;
     private final LessonService lessonService;
     private final UserService userService;
     private final CourseService courseService;
 
     @GetMapping("/displayMessages")
-    public String displayMessages(Model model) {
-        model.addAttribute("contactMsgs", contactService.getAll());
-        System.out.println(contactService.getAll().size());
-        return "message";
+    public ResponseEntity<ApiInfo<List<ContactDTO>>> displayMessages() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiInfo.successReturn("this is the list of messages",contactService.getAll()));
     }
 
 
     @PostMapping("/closeMsg/{id}")
-    public String closeMsg(@PathVariable Long id) {
+    public ResponseEntity<ApiInfo<Void>> closeMsg(@PathVariable Long id) {
         contactService.updateMsgStatus(id);
-        return "redirect:/private/displayMessages";
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiInfo.successVoid("message closed"));
     }
 
 
 
     @GetMapping("/displayLessons")
-    public String displayLessons(Model model) {
-        model.addAttribute("Lesson",new LessonDTO());
-        model.addAttribute("Lessons", lessonService.findAll());
-        model.addAttribute("instructors",userService.findByRole(UserType.INSTRUCTOR));
-        model.addAttribute("courses",courseService.findAll());
-        return "lesson";
+    public ResponseEntity<ApiInfo<List<LessonDTO>>> displayLessons() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiInfo.successReturn("this is the list of lessons",lessonService.findAll()));
     }
 
     @PostMapping("/addNewLesson")
@@ -76,15 +86,15 @@ public class AdminController {
     }
 
 
-//    @GetMapping("/displayCourses")
-//    public String displayCourses(Model model) {
-//        model.addAttribute("CourseDTO",new CourseDTO());
-//        model.addAttribute("Courses",courseService.findAll());
-//        model.addAttribute("professors",userService.findByRole(UserType.PROFESSOR));
-//        System.out.println(courseService.findAll().size());
-//        System.out.println(lessonService.findAllWithDetails().size());
-//        return "course";
-//    }
+    @GetMapping("/displayCourses")
+    public String displayCourses(Model model) {
+        model.addAttribute("CourseDTO",new CourseDTO());
+        model.addAttribute("Courses",courseService.findAll());
+        model.addAttribute("professors",userService.findByRole(UserType.PROFESSOR));
+        System.out.println(courseService.findAll().size());
+        System.out.println(lessonService.findAll().size());
+        return "course";
+    }
 
     @PostMapping("/addNewCourse")
     public String addNewCourse(@ModelAttribute("CourseDTO") CourseDTO courseDTO,Model model) {

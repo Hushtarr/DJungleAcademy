@@ -1,7 +1,6 @@
 package com.djungleacademy.service;
 
 import com.djungleacademy.dto.CourseDTO;
-import com.djungleacademy.dto.LessonDTO;
 
 import java.util.List;
 
@@ -10,7 +9,8 @@ public interface CourseService {
 
     void save(CourseDTO courseDTO);
 
-    CourseDTO getCourseById(Long id);
+    CourseDTO findById(Long id);
+    CourseDTO findByName(String courseName);
 
     List<CourseDTO> findAll();
 
