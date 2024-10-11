@@ -5,6 +5,7 @@ import com.djungleacademy.entity.Course;
 import com.djungleacademy.entity.Lesson;
 import com.djungleacademy.exceptions.LessonNotFoundEx;
 import com.djungleacademy.mapper.GlobalMapper;
+import com.djungleacademy.mapper.LessonMapper;
 import com.djungleacademy.repository.CourseRepository;
 import com.djungleacademy.repository.LessonRepository;
 import com.djungleacademy.repository.UserRepository;
@@ -26,6 +27,7 @@ public class LessonServiceImpl implements LessonService {
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final LessonMapper lessonMapper;
 
 
     @Override
@@ -36,21 +38,14 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public void save(LessonDTO lessonDTO) {
-        Lesson lesson=mapper.convert(lessonDTO, Lesson.class);
-        lesson.setCourse(courseRepository.findByIsDeletedAndName(false,lessonDTO.getCourse()));
-        lesson.setInstructor(userRepository.findByFirstName(lessonDTO.getInstructor()));
+        Lesson lesson=lessonMapper.toEntity(lessonDTO);
         lessonRepository.save(lesson);
     }
 
     @Override
     public List<LessonDTO> findAll() {
         return lessonRepository.findAllByIsDeletedFalse().stream()
-                .map(lesson -> {
-                    LessonDTO lessonDTO = mapper.convert(lesson, LessonDTO.class);
-                    lessonDTO.setCourse(lesson.getCourse().getName());
-                    lessonDTO.setInstructor(lesson.getInstructor().getFirstName());
-                    return lessonDTO;
-                })
+                .map(lessonMapper::toDTO)
                 .collect(Collectors.toList());
     }
 

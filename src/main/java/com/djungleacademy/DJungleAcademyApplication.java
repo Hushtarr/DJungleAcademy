@@ -1,5 +1,6 @@
 package com.djungleacademy;
 
+import com.djungleacademy.mapper.LessonMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,4 +17,5 @@ public class DJungleAcademyApplication {
     public ModelMapper mapper(){
         return new ModelMapper();
     }
+
 }
