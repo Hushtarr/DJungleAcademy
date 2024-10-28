@@ -15,3 +15,6 @@ spring:
             mode: always
     thymeleaf:
         cache: false
+    jwt:
+        secret: HelloWorld # 使用更复杂的密钥
+        expiration: 600000 # 10 分钟，以毫秒为单位

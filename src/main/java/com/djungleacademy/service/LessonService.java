@@ -9,4 +9,5 @@ public interface LessonService {
     void save(LessonDTO lessonDTO);
     List<LessonDTO> findAll();
     void delete(Long id);
+    void update(Long id,LessonDTO lessonDTO);
 }

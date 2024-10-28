@@ -8,4 +8,5 @@ public enum UserType {
         ADMIN("Admin"),PROFESSOR("Professor"),INSTRUCTOR("Instructor"),STUDENT("Student");
         private final String value;
 
+
 }

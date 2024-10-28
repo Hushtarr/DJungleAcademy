@@ -1,50 +1,59 @@
 package com.djungleacademy.config;
 
+import com.djungleacademy.filter.JwtAuthenticationFilter;
+import com.djungleacademy.security.CustomAuthenticationProvider;
+import com.djungleacademy.security.JwtEntryPoint;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtEntryPoint jwtEntryPoint;
+    private final CustomAuthenticationProvider customAuthenticationProvider;
+
 
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        return http
+        http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(publicPages()).permitAll()
-                        .requestMatchers("/private/**").hasRole("Admin")
+                        .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(jwtEntryPoint))
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .authenticationProvider(customAuthenticationProvider);
+        ;
 
-//                .oauth2Login(oauth2 -> oauth2
-//                        .loginPage("/login")
-//                        .defaultSuccessUrl("/dashboard", true)
-//                        .failureUrl("/login?error=true")
-//                )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/dashboard", true) // 重定向到 dashboard 页面并保持状态
-                        .failureUrl("/login?error=true")
-                )
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout=true")
-                        .invalidateHttpSession(true)
-                )
-                .httpBasic(Customizer.withDefaults())
-                .build();
+        return http.build();
     }
+
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
+
+
+
     private String[] publicPages() {
-        return new String[] {
+        return new String[]{
                 "/",
                 "/home",
                 "/holidays/**",
@@ -53,9 +62,7 @@ public class SecurityConfig {
                 "/courses",
                 "/about",
                 "/assets/**",
-                "/login",
-                "/logout",
                 "/createUser"
         };
-}
+    }
 }
