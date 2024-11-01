@@ -9,6 +9,8 @@ import com.djungleacademy.mapper.GlobalMapper;
 import com.djungleacademy.repository.UserRepository;
 import com.djungleacademy.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -59,5 +61,15 @@ public class UserServiceImpl implements UserService {
     public UserDTO findById(Long id) {
         User user= userRepository.findById(id).orElseThrow(()->new UserNotFoundEx("no such person"));
         return globalMapper.convert(user,UserDTO.class);
+    }
+
+    @Override
+    public UserDTO getLoggedInUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String email = (String) authentication.getPrincipal();
+            return findByEmail(email);
+        }
+        throw new UserNotFoundEx("no such person");
     }
 }

@@ -1,6 +1,7 @@
 package com.djungleacademy.dto;
 
 import com.djungleacademy.validation.FieldMatch;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -18,6 +19,7 @@ import lombok.Setter;
         @FieldMatch(fieldOne = "password", fieldTwo = "confirmPassword", message = "Passwords must match"),
         @FieldMatch(fieldOne = "email", fieldTwo = "confirmEmail", message = "email must match")
 })
+@JsonIgnoreProperties(value = {"password","confirmPassword","confirmEmail"})
 public class UserDTO {
     private Long id;
 

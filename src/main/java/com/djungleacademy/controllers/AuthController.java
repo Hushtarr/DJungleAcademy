@@ -5,8 +5,10 @@ import com.djungleacademy.dto.common.ApiInfo;
 import com.djungleacademy.dto.common.LoginRequest;
 import com.djungleacademy.security.JwtToken;
 import com.djungleacademy.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,34 +43,23 @@ public class AuthController {
                     .status(HttpStatus.OK)
                     .body(ApiInfo.successReturn("Here is the token: ", jwt));
         } catch (BadCredentialsException e) {
-            // 输出更详细的错误信息
-            System.out.println("Authentication failed: " + e.getMessage());
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
-                    .body(ApiInfo.failure("Invalid username or password"));
+                    .body(ApiInfo.failure("Authentication failed due to: " + e.getMessage()));
         }
 
     }
 
-    @GetMapping("/userinfo")
-    public ResponseEntity<ApiInfo<?>> getUserInfo() {
-        // 获取当前认证的用户信息
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    @PostMapping("/logout")
+    public ResponseEntity<ApiInfo<?>> logout(HttpServletRequest request) {
+        String token=request.getHeader(HttpHeaders.AUTHORIZATION).substring(7);
+        jwtToken.destroyToken(token);
+        SecurityContextHolder.clearContext();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiInfo.successReturn("Logout successful", null));
 
-        if (authentication != null && authentication.isAuthenticated()) {
-            // 假设用户信息是以 UserDTO 的形式存储在 Authentication 对象中
-            var email = authentication.getPrincipal();
-            UserDTO userDTO=userService.findByEmail((String) email);
-
-            // 返回用户信息
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(ApiInfo.successReturn("User information retrieved successfully", userDTO));
-        } else {
-            // 若认证信息不存在或无效
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(ApiInfo.failure("Invalid or expired token"));
-        }
     }
+
+
 }

@@ -4,6 +4,7 @@ import com.djungleacademy.exceptions.JwtValidationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component
+@RequiredArgsConstructor
 public class JwtToken {
 
     @Value("${spring.jwt.secret}")
@@ -20,9 +22,11 @@ public class JwtToken {
     @Value("${spring.jwt.expiration}")
     private long expirationTime;
 
+    private final JwtBlacklist jwtBlacklist;
+
     private SecretKey getKey() {
         // 方法1：使用 JJWT 内置的密钥生成器
-//        return Jwts.SIG.HS512.key().build();
+        //  return Jwts.SIG.HS512.key().build();
 
         // 或者方法2：如果要使用配置的密钥，确保它足够长
         String defaultKey = "ThisIsADefaultKeyForFulfillTheSize";
@@ -41,6 +45,9 @@ public class JwtToken {
     }
 
     public boolean validateToken(String token) {
+        if (jwtBlacklist.isTokenBlacklisted(token)) {
+            throw new JwtValidationException("Token is blacklisted and no longer valid.");
+        }
         try {
             Jwts.parser()
                     .verifyWith(getKey())
@@ -50,6 +57,10 @@ public class JwtToken {
         } catch (Exception e) {
             throw new JwtValidationException("Invalid JWT token: " + e.getMessage());
         }
+    }
+
+    public void destroyToken(String token) {
+        jwtBlacklist.addToBlacklist(token);
     }
 
     public String getUsernameFromToken(String token) {

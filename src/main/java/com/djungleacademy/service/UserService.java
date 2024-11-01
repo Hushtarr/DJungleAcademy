@@ -11,4 +11,5 @@ public interface UserService {
     void update(UserDTO userDTO);
     List<UserDTO> findByRole(UserType userType);
     UserDTO findById(Long id);
+    UserDTO getLoggedInUser();
 }
